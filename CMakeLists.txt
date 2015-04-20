@@ -10,7 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
 )
-
+find_package(OpenCV REQUIRED)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -66,10 +66,11 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   sensor_msgs#   std_msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   sensor_msgs
+   std_msgs
+ )
 
 ###################################
 ## catkin specific configuration ##
@@ -104,16 +105,17 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-# add_executable(object_detection_laser_node src/object_detection_laser_node.cpp)
+ add_executable(object_detection_laser_node src/object_detection_laser.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(object_detection_laser_node object_detection_laser_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(object_detection_laser_node
-#   ${catkin_LIBRARIES}
-# )
+ target_link_libraries(object_detection_laser_node
+   ${catkin_LIBRARIES}
+   ${OpenCV_LIBRARIES}
+ )
 
 #############
 ## Install ##
