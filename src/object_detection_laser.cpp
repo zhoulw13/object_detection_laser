@@ -8,6 +8,7 @@
 #include<iostream>
 #include"ros/ros.h"
 #include"std_msgs/String.h"
+#include"find_edge.v2.h"
 #include <sensor_msgs/LaserScan.h>
 #include <math.h>
 #include <fstream>
@@ -39,8 +40,10 @@ public:
 	int height;
 	ros::NodeHandle nh;
 	ros::Subscriber laser_sub;
+    //float angle_min, angle_max, angle_increment;
+    //vector<float> depth;
 	Mat m_coord;
-	Mat depth;
+    sensor_msgs::LaserScan depth;
 public:
 	laser2Img(int iwidth, int iheight,const ros::NodeHandle& n){
 		nh = n;
@@ -51,7 +54,11 @@ public:
         num = 1;
 	}
 	void laserReceive(const sensor_msgs::LaserScan& data){
-		int m_size = data.ranges.size();
+        //depth.clear();
+        depth = data;//.range;
+        //angle_increment = data.angle_increment;
+        //angle_min = data.angle_min;
+		/*int m_size = data.ranges.size();
 		float angle_min, angle_max, angle_increment;
 		angle_increment = data.angle_increment;
 		float radian = data.angle_min;
@@ -88,7 +95,7 @@ public:
 			temp.at<float>(0,1) = y;
 			temp.at<float>(0,2) = data.ranges[i]*1000;
 			msg.push_back(temp);
-		}
+		}*/
 	};
 };
 
@@ -101,53 +108,20 @@ int main(int argc,char** argv){
 	frame = cvQueryFrame(capture);
 	CvPoint point;
 	laser2Img app(frame->width, frame->height, n);
-	int count = 0;
+    FindEdge find;
 	while(ros::ok()){
 		ros::spinOnce();
 		loop_rate.sleep();
 		
 		frame = cvQueryFrame(capture);
-		int size = app.msg.rows;
-		//ROS_INFO("3 %d", size);
-		count++;
-        if (count == 20){
-			std::stringstream sstm_depth;
-			sstm_depth << "/home/wangh09/data/depth/" << num << ".yml";
-			cv::FileStorage storage1(sstm_depth.str().c_str(), cv::FileStorage::WRITE);
-			storage1 << "depth" << app.depth;
-			storage1.release();
-
-			std::stringstream sstm_point;
-			sstm_point << "/home/wangh09/data/point/" << num << ".yml";
-			cv::FileStorage storage2(sstm_point.str().c_str(), cv::FileStorage::WRITE);
-			storage2 << "point" << app.msg;
-			storage2.release();
-
-			string str;
-			std::stringstream sstm;
-			sstm << "/home/wangh09/data/image/" << num << ".jpg";
-			str = sstm.str();
-			cvSaveImage(str.c_str(), frame);
-
-			ROS_INFO("%d", num);
-		}
-		for(int i=0;i<size;i++){
+		//int size = app.msg.rows;
+        //find.run(app.depth, frame);
+		/*for(int i=0;i<size;i++){
 			point.x = app.msg.at<float>(i, 0);
 			point.y = app.msg.at<float>(i, 1);
-			//ROS_INFO("%d x:%d,y:%d", i, int(point.x), int(point.y));
 			cvDrawLine(frame, point, point, cvScalar(255, 0, 0), 5);
-		}
+		}*/
 		cvShowImage(" ", frame);
-        if (count == 20){
-			string str;
-			std::stringstream sstm;
-			sstm << "/home/wangh09/data/image_plot/" << num << ".jpg";
-			str = sstm.str();
-			cvSaveImage(str.c_str(), frame);
-
-			count = 0;
-			num++;
-		}
 		char c = cvWaitKey(1);
 		if(c == 32)
 			break;
