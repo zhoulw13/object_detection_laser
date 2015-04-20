@@ -1,8 +1,8 @@
 /*************************************************************************
-	> File Name: laserToImg.cpp
-	> Author: 
-	> Mail: 
-	> Created Time: 2015年03月25日 星期三 15时29分28秒
+	> File Name: object_detection_laser.cpp
+	> Author: zhoulw
+	> Mail: zhoulw063922@gmail.com
+	> Created Time: 2015/3/25 15:29:28
  ************************************************************************/
 
 #include<iostream>
