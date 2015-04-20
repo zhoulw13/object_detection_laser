@@ -186,14 +186,14 @@ void FindEdge::mb_drawRec(IplImage *&img)
 		{
 			rect.x = m_plain.at<float>(m_object[i].left_index,0);
 			rect.y = m_plain.at<float>(m_object[i].left_index,1) - LENGTH;
-				rect.width = abs(m_plain.at<float>(m_object[i].right_index,0) - m_plain.at<float>(m_object[i].left_index,0));
+			rect.width = abs(m_plain.at<float>(m_object[i].right_index,0) - m_plain.at<float>(m_object[i].left_index,0));
 			m_rect.push_back(rect);
 			cvRectangleR(img, rect, cvScalar(255, 0, 0), 5);
 		}
 	}
 }
 
-void FindEdge::mb_run(const sensor_msgs::LaserScan& scan, IplImage *&img)
+void FindEdge::mb_run(sensor_msgs::LaserScan& scan, IplImage *&img)
 {
 	mb_init(scan);
 	mb_mapping(img);

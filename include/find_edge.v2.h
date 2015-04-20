@@ -4,6 +4,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include"ros/ros.h"
 #include <sensor_msgs/LaserScan.h>
 #include <vector>
 #include <iostream>
@@ -33,11 +34,11 @@ public:
 	vector<CvRect> m_rect;
 	vector<CvRect> pre_rect;
 
-	void mb_init(const sensor_msgs::LaserScan& scan);
+	void mb_init(sensor_msgs::LaserScan& scan);
 	void mb_mapping(IplImage *&img);
 	void mb_cluster();
 	void mb_findEdge();
 	void mb_drawRec(IplImage *&img);
-	void mb_run(const sensor_msgs::LaserScan& scan, IplImage *&img);
+	void mb_run(sensor_msgs::LaserScan& scan, IplImage *&img);
 };
 #endif

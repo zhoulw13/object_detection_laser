@@ -112,13 +112,8 @@ include_directories(
 # add_dependencies(object_detection_laser_node object_detection_laser_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
- target_link_libraries(object_detection_laser_node
-   ${catkin_LIBRARIES}
-   ${OpenCV_LIBRARIES}
- )
-
- target_link_libraries(find_edge
-   ${catkin_LIBRARIES}
+ target_link_libraries(object_detection_laser_node find_edge
+   ${catkin_LIBRARIES} 
    ${OpenCV_LIBRARIES}
  )
 

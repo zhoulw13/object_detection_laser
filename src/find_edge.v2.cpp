@@ -11,7 +11,7 @@
 #define RANGE 10
 
 
-void FindEdge::mb_init(const sensor_msgs::LaserScan& scan)
+void FindEdge::mb_init(sensor_msgs::LaserScan& scan)
 {
 	vector<float> data = scan.ranges;
 	float radian = scan.angle_min;
@@ -193,7 +193,7 @@ void FindEdge::mb_drawRec(IplImage *&img)
 	}
 }
 
-void FindEdge::mb_run(const sensor_msgs::LaserScan& scan, IplImage *&img)
+void FindEdge::mb_run(sensor_msgs::LaserScan& scan, IplImage *&img)
 {
 	mb_init(scan);
 	mb_mapping(img);

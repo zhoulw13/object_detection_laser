@@ -103,19 +103,18 @@ int main(int argc,char** argv){
 	ros::init(argc,argv,"test");
 	ros::NodeHandle n;
 	ros::Rate loop_rate(100);
-	CvCapture *capture = cvCreateCameraCapture(1);
+	CvCapture *capture = cvCreateCameraCapture(0);
 	IplImage* frame;
 	frame = cvQueryFrame(capture);
 	CvPoint point;
+	cvNamedWindow(" ");
 	laser2Img app(frame->width, frame->height, n);
     FindEdge find;
 	while(ros::ok()){
 		ros::spinOnce();
-		loop_rate.sleep();
-		
 		frame = cvQueryFrame(capture);
 		//int size = app.msg.rows;
-        //find.run(app.depth, frame);
+        find.mb_run(app.depth, frame);
 		/*for(int i=0;i<size;i++){
 			point.x = app.msg.at<float>(i, 0);
 			point.y = app.msg.at<float>(i, 1);
@@ -125,5 +124,6 @@ int main(int argc,char** argv){
 		char c = cvWaitKey(1);
 		if(c == 32)
 			break;
+		loop_rate.sleep();
 	}
 }
